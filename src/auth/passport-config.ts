@@ -1,18 +1,24 @@
 import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
-import { Request } from 'express';
 import User from '../models/userModel';
 import dotev from 'dotenv';
+import { PassportStatic } from 'passport';
 
 dotev.config();
+
+interface JwtPayload {
+  userId: number;
+  exp: number;
+  // Outras propriedades do payload, se houver...
+}
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET,
 };
 
-export default function passportConfig(passport: any) {
+export default function passportConfig(passport: PassportStatic) {
     passport.use(
-        new JwtStrategy(options, async (jwt_payload: any, done: VerifiedCallback) => {
+        new JwtStrategy(options, async (jwt_payload: JwtPayload, done: VerifiedCallback) => {
             try {
                 // Verifique o token do usuário e procure o usuário no banco de dados usando o ID do usuário
                 const user = await User.findById(jwt_payload.userId);

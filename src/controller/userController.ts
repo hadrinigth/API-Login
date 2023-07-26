@@ -3,13 +3,13 @@ import User from '../models/userModel';
 import bcrypt from 'bcrypt';
 
 export const View = async (req: Request, res: Response) => {
-    let user = await User.find({});
+    const user = await User.find({});
     res.json(user);
     console.log(user);
 };
 export const Create = async (req: Request, res: Response) => {
     try {
-        let { name, email, password } = req.body;
+        const { name, email, password } = req.body;
 
         // Verificar se o usuário já existe no banco de dados
         const existingUser = await User.findOne({ email });
@@ -20,7 +20,7 @@ export const Create = async (req: Request, res: Response) => {
         // Usar bcrypt para criptografar a senha
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        let newUser = new User({
+        const newUser = new User({
             name: name,
             email: email,
             password: hashedPassword,
@@ -35,14 +35,14 @@ export const Create = async (req: Request, res: Response) => {
 
 export const Update = async (req: Request, res: Response) => {
     try {
-        let userId = req.params.id;
-        let updateData = req.body;
+        const userId = req.params.id;
+        const updateData = req.body;
         if (userId === null) {
             console.log('Update: ID do usuário inválido.');
             return res.status(400).json({ success: false, error: 'ID do usuário inválido.' });
         }
 
-        let user = await User.findByIdAndUpdate(userId, updateData, { runValidators: true, new: true });
+        const user = await User.findByIdAndUpdate(userId, updateData, { runValidators: true, new: true });
         console.log('Update: user:', user);
         res.json({ success: true, user });
     } catch (error) {
@@ -53,13 +53,13 @@ export const Update = async (req: Request, res: Response) => {
 
 export const Remove = async (req: Request, res: Response) => {
     try {
-        let userId = req.params.id;
+        const userId = req.params.id;
         if (userId === undefined) {
             console.log('Remove: ID do usuário inválido.');
             return res.status(400).json({ success: false, error: 'ID do usuário inválido.' });
         }
 
-        let user = await User.findByIdAndDelete(userId);
+        const user = await User.findByIdAndDelete(userId);
         console.log('Remove: user:', user);
         res.json({ success: true, user });
     } catch (error) {
