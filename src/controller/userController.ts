@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
 import User from '../models/userModel';
 import bcrypt from 'bcrypt';
 
+
+export const ping = (req: Request, res: Response) => {
+    return res.json({ success: true, mensenge: 'pong' })
+};
 export const View = async (req: Request, res: Response) => {
     const user = await User.find({});
     res.json(user);

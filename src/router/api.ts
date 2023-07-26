@@ -9,7 +9,7 @@ router.post('/api/login', loginController.login);
 
 
 //CRUD
-
+router.get('/api/ping', UserController.ping)
 
 router.get('/api/', UserController.View)
 router.post('/api/create', UserController.Create)
