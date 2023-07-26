@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
+import bcrypt from 'bcrypt';
 
 export const View = async (req: Request, res: Response) => {
     let user = await User.find({});
@@ -9,14 +10,24 @@ export const View = async (req: Request, res: Response) => {
 export const Create = async (req: Request, res: Response) => {
     try {
         let { name, email, password } = req.body;
-        let user = new User({
+
+        // Verificar se o usuário já existe no banco de dados
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: 'Usuário já existe.' });
+        }
+
+        // Usar bcrypt para criptografar a senha
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        let newUser = new User({
             name: name,
             email: email,
-            password: password,
+            password: hashedPassword,
         });
 
-        await user.save();
-        res.json({ success: true, user: user });
+        await newUser.save();
+        res.json({ success: true, user: newUser });
     } catch (error) {
         res.json({ success: false, error: error });
     }

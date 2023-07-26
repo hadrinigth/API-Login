@@ -1,7 +1,12 @@
 import { Router,} from "express";
 import * as UserController from '../controller/userController'
-
+import * as loginController from '../controller/loginController'
 const router = Router();
+
+
+//LOGIN
+router.post('/api/login', loginController.login);
+
 
 //CRUD
 
