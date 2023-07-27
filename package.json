@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint . --ext .ts,.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -e ts,json, src/server.ts",
-    "build": "tsc && webpack --mode production",
+    "build": "rm -rf ./dist && tsc",
+    "start": "node ./dist/server.js",
     "dev": "nodemon -e ts,json, src/server.ts"
   },
   "repository": {
