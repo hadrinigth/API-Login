@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "lint": "eslint . --ext .ts,.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf ./dist && tsc",
-    "start": "node ./dist/server.js",
-    "dev": "nodemon -e ts,json, src/server.ts"
-  },
+"scripts": {
+  "lint": "eslint . --ext .ts,.js",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "tsc",
+  "start": "node ./dist/server.js",
+  "dev": "nodemon -e ts,json, src/server.ts"
+},
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hadrinigth/API-Login.git"
